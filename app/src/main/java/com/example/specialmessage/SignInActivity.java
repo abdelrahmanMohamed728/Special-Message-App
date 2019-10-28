@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
                             Intent intent = new Intent(SignInActivity.this,MainActivity.class);
                             intent.putExtra("id",mAuth.getCurrentUser().getUid());
                             startActivity(intent);
-                            finish();
+                            finishAffinity();
 
                         } else {
 

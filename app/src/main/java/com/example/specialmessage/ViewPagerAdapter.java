@@ -13,14 +13,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if(position==0)
-        return new AddFragment();
-        else
+        if (position == 0)
+            return new AddFragment();
+        else if (position == 1)
             return new EditFragment();
+        else return new SearchFragment();
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

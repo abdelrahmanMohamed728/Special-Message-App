@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         id =getIntent().getStringExtra("id");
          tab1.getTabAt(0).setIcon(R.drawable.add);
          tab1.getTabAt(1).setIcon(R.drawable.edit);
+        tab1.getTabAt(2).setIcon(R.drawable.search);
     }
      String getId(){
         return id;
