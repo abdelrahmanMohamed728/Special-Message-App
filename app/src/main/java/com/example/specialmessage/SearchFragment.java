@@ -1,6 +1,7 @@
 package com.example.specialmessage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -45,6 +47,7 @@ public class SearchFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_search, container, false);
         search = v.findViewById(R.id.searchUserEditText);
         list = new ArrayList<>();
+        final MainActivity activity = (MainActivity) getActivity();
         listView = v.findViewById(R.id.UsersListView);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Users");
@@ -64,12 +67,23 @@ public class SearchFragment extends Fragment {
                        ) {
                            String username=   datasnap.child("username").getValue().toString();
                            if (username.contains(search.getText().toString())) {
-                               User user = new User(dataSnapshot.getKey(), datasnap.child("username").getValue().toString(), datasnap.child("email").getValue().toString());
+                               User user = new User(datasnap.getKey(), datasnap.child("username").getValue().toString(), datasnap.child("email").getValue().toString());
                                list.add(user);
                            }
                        }
                        adapter = new SearchAdapter(getContext(),list);
                        listView.setAdapter(adapter);
+                       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                           @Override
+                           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                               Intent intent = new Intent(getActivity(),UserActivity.class);
+                               intent.putExtra("id",list.get(position).getId());
+                               intent.putExtra("email",list.get(position).getEmail());
+                               intent.putExtra("username",list.get(position).getUsername());
+                               intent.putExtra("curid",activity.id);
+                               startActivity(intent);
+                           }
+                       });
                    }
 
                    @Override
